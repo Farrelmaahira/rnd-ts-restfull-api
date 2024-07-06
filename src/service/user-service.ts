@@ -21,6 +21,11 @@ export class UserService {
             throw new ResponseError('Username already exist', 400);
         }
 
+        const hashPass: string = await bcrypt.hash(requestData.password, 10) 
+
+        requestData.password = hashPass
+        console.log(requestData);
+
         const user = await prisma.user.create({
             data: requestData
         })
@@ -41,7 +46,9 @@ export class UserService {
             throw new ResponseError('Email or Password not match', 400);
         }
 
-        if(checkUsername.password !== requestData.password) {
+        const validatePassword: boolean = bcrypt.compareSync(requestData.password, checkUsername.password);
+
+        if(!validatePassword) {
             throw new ResponseError('Email or Password not match', 400);
         }
         

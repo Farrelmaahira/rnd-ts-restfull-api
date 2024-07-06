@@ -14,8 +14,14 @@ datasource db {
 }
 
 enum Role {
-  USER
-  ADMIN
+  user
+  admin
+}
+
+enum Status {
+  user
+  pending
+  seller
 }
 
 model User {
@@ -23,6 +29,30 @@ model User {
   email String @unique
   username String
   password String
-  role Role @default(USER)
+  role Role @default(user)
+  status Status @default(user)
   token String?
+  store Store? 
 }
+
+
+model Store {
+  id String @id() @default(cuid()) @db.VarChar(30)
+  name String
+  description String
+  address String
+  user User @relation(fields: [userId], references:[id])
+  userId String @unique
+  products Product[]
+}
+
+model Product {
+  id Int @id() @default(autoincrement())
+  name String
+  price Int
+  quantity Int
+  image String?
+  store Store @relation(fields: [storeId], references: [id])
+  storeId String @unique
+}
+

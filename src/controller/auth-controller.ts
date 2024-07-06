@@ -1,6 +1,6 @@
 import { LoginRequest, RegisterRequest } from "../type/user-type";
 import { Request, Response, NextFunction } from "express";
-import { UserService } from "./../service/user-service";
+import { UserService } from "../service/user-service";
 
 export class AuthController {
 

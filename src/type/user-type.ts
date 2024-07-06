@@ -14,10 +14,11 @@ export interface  RegisterRequest {
 } 
 
 export interface UserResponse {
+    id : string
     email : string,
     username : string,
     role : string,
-    token? : string
+    status : string
 }
 
 export interface LoginRequest {
@@ -25,10 +26,16 @@ export interface LoginRequest {
     password : string
 }
 
+export interface UserRequest extends UserResponse  {
+
+} 
+
 export function userResponse(data : User): UserResponse {
     return {
+        id : data.id,
         email : data.email,
         username : data.username,
-        role : data.role
+        role : data.role,
+        status : data.status
     }
 }
